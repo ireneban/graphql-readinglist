@@ -3,7 +3,13 @@ In this file, we describe a schema which shows data types, relations between thi
 */
 const graphql = require("graphql");
 const _ = require("lodash");
-const { GraphQLObjectType, GraphQLString, GraphQLSchema } = graphql;
+const {
+  GraphQLObjectType,
+  GraphQLString,
+  GraphQLSchema,
+  GraphQLID,
+  GraphQLInt
+} = graphql;
 
 // dummy data
 var books = [
@@ -11,13 +17,27 @@ var books = [
   { name: "The Final Empire", genre: "Fantasy", id: "2" },
   { name: "The Long Earth", genre: "Sci-Fi", id: "3" }
 ];
+var authors = [
+  { name: "Patrick Rothfuss", age: 44, id: "1" },
+  { name: "Brandon Sanderson", age: 42, id: "2" },
+  { name: "Terry Pratchett", age: 66, id: "3" }
+];
 
 const BookType = new GraphQLObjectType({
   name: "Book",
   fields: () => ({
-    id: { type: GraphQLString },
+    id: { type: GraphQLID }, // this rely on requested id type --> so convenient!
     name: { type: GraphQLString },
     genre: { type: GraphQLString }
+  })
+});
+
+const AuthorType = new GraphQLObjectType({
+  name: "Author",
+  fields: () => ({
+    id: { type: GraphQLID },
+    name: { type: GraphQLString },
+    age: { type: GraphQLInt }
   })
 });
 
@@ -28,12 +48,19 @@ const RootQuery = new GraphQLObjectType({
     book: {
       // query book with bookType by id as arg
       type: BookType,
-      args: { id: { type: GraphQLString } },
+      args: { id: { type: GraphQLID } },
       resolve(parent, args) {
         // relationship between data
         // code to get data from db / other source when requested
         // for now, we use dummy data which is a simple array --> use lodash
-        _.find(books, { id: args.id });
+        return _.find(books, { id: args.id });
+      }
+    },
+    author: {
+      type: AuthorType,
+      args: { id: { type: GraphQLID } },
+      resolve(parent, args) {
+        return _.find(authors, { id: args.id });
       }
     }
   }

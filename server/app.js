@@ -6,7 +6,8 @@ const schema = require("./schema/schema");
 app.use(
   "/graphql",
   graphqlHTTP({
-    schema
+    schema,
+    graphiql: true /* to allow to test using graphiql */
   })
 );
 
