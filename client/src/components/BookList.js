@@ -5,7 +5,7 @@ import BookDetails from "./BookDetails";
 
 const BookList = () => {
   const { loading, error, data } = useQuery(getBooksQuery);
-  const [selected, setSelected] = useState("");
+  const [selected, setSelected] = useState(null);
 
   // const selectedCB = useCallback(e => setSelected(book.id))
 
@@ -15,9 +15,8 @@ const BookList = () => {
   const { books } = data;
 
   const bookListItems = books.map(({ id, name }) => {
-    const selectedCB = useCallback(e => setSelected(id), []);
     return (
-      <li key={id} onClick={selectedCB}>
+      <li key={id} onClick={() => setSelected(id)}>
         {name}
       </li>
     );
@@ -32,38 +31,3 @@ const BookList = () => {
 };
 
 export default BookList;
-
-// function BookList() {
-
-//   const [selected, setSelected] = useState(null);
-
-//   const displayBooks = () => {
-//     var data = this.props.data;
-//     if (data.loading) {
-//       return <div>Loading books...</div>;
-//     } else {
-//       return data.books.map(book => {
-//         return (
-//           <li
-//             key={book.id}
-//             onClick={e => {
-//               this.setState({ selected: book.id });
-//             }}
-//           >
-//             {book.name}
-//           </li>
-//         );
-//       });
-//     }
-//   }
-//   render() {
-//     return (
-//       <div>
-//         <ul id="book-list">{this.displayBooks()}</ul>
-//         <BookDetails bookId={this.state.selected} />
-//       </div>
-//     );
-//   }
-// }
-
-// export default graphql(getBooksQuery)(BookList);
