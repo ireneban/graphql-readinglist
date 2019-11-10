@@ -6,6 +6,11 @@ import {
   addBookMutation,
   getBooksQuery
 } from "../queries/queries";
+/**
+ * getAuthorsQuery: to allow users to select author when they add a book
+ * addBookMutation: to add a book
+ * getBoosQuery: to show the list of books after adding a book
+ */
 
 class AddBook extends Component {
   constructor(props) {
@@ -44,6 +49,7 @@ class AddBook extends Component {
       refetchQueries: [{ query: getBooksQuery }]
     });
   }
+
   render() {
     return (
       <form id="add-book" onSubmit={this.submitForm.bind(this)}>
