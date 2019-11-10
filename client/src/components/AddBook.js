@@ -29,12 +29,21 @@ const AddBook = () => {
   const [genre, setGenre] = useState("");
   const [author, setAuthor] = useState("");
 
+  /**
+   * Pass a "create" function and an array of dependencies.
+   * useMemo will only recompute the memoized value when one of the dependencies has changed.abs
+   * This optimization helps to avoid expensive calculations on every render.
+   */
   const options = useMemo(() => getOptions(loading, error, data), [
     loading,
     error,
     data
   ]);
 
+  /**
+   * useCallback will return a memoized version of the callback that only changes
+   * if one of the dependencies has changed.
+   */
   const nameCB = useCallback(e => setName(e.target.value), []);
   const genreCB = useCallback(e => setGenre(e.target.value), []);
   const authorCB = useCallback(e => setAuthor(e.target.value), []);
