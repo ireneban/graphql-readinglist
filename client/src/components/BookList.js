@@ -5,9 +5,14 @@ import BookDetails from "./BookDetails";
 
 const BookList = () => {
   const { loading, error, data } = useQuery(getBooksQuery);
-  const [selected, setSelected] = useState(null);
-
-  // const selectedCB = useCallback(e => setSelected(book.id))
+  /**
+   * data: An object containing the result of GraphQL query. Defaults to undefined.
+   * loading: A boolean that indicates whether that the request is in flight.
+   * error: ApolloError. A runtime error with graphQLErrors and networkError properties.
+   */
+  const [selected, setSelected] = useState(
+    null
+  ); /* selected status using React Hook */
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
