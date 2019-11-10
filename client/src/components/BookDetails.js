@@ -3,9 +3,12 @@ import { useQuery } from "@apollo/react-hooks";
 import { getBookQuery } from "../queries/queries";
 
 const BookDetails = ({ bookId }) => {
+  /* Pass bookId that came from BookList (selected) */
   const { loading, error, data } = useQuery(getBookQuery, {
-    skip: !bookId,
-    variables: { id: bookId }
+    skip: !bookId /* If skip is true, the query will be skipped entirely. -> if there is no such bookId, skip */,
+    variables: {
+      id: bookId
+    } /* An object containing all of the variables your query needs to execute */
   });
 
   let content;
